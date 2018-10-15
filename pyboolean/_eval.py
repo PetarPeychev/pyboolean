@@ -1,19 +1,6 @@
-operators = {
-    '&' : lambda x, y : x and y,
-    '.' : lambda x, y : x and y,
-    '∧' : lambda x, y : x and y,
-    '+' : lambda x, y : x or y,
-    '|' : lambda x, y : x or y,
-    '∨' : lambda x, y : x or y,
-    '!' : lambda x : not x,
-    '~' : lambda x : not x,
-    '¬' : lambda x : not x,
-    '^' : lambda x, y : x ^ y,
-    '⊕' : lambda x, y : x ^ y,
-    '⊻' : lambda x, y : x ^ y
-}
+from _constants import operators
 
-def eval(expr):
+def eval_expr(expr):
     stack = []
 
     for i in expr:
@@ -31,3 +18,15 @@ def eval(expr):
             stack.append(int(i))
 
     return stack[0]
+
+def eval_func(func, inputs):
+    func_replaced = ''
+    operand_count = 0
+
+    for i in func:
+        if i in operators:
+            func_replaced += i
+        else:
+            func_replaced += str(inputs[operand_count])
+            operand_count += 1
+    return eval_expr(func_replaced)
